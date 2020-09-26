@@ -1,5 +1,8 @@
 ﻿namespace LibraryApplication.Models.Enums
 {
+    /// <summary>
+    /// TODO: remove
+    /// </summary>
     public enum Genre
     {
         Fiction,
