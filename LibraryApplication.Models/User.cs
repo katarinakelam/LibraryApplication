@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace LibraryApplication.Models
 {
+    /// <summary>
+    /// The user model.
+    /// </summary>
     public class User
     {
         public int Id { get; set; }

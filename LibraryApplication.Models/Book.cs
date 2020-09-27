@@ -4,6 +4,9 @@ using System.Text;
 
 namespace LibraryApplication.Models
 {
+    /// <summary>
+    /// The book model.
+    /// </summary>
     public class Book
     {
         public int Id { get; set; }
