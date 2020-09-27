@@ -106,7 +106,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         /// <returns>Returns a list of users having active top overdue time.</returns>
         public List<User> GetTopUsersByActiveOverdueTime()
         {
-            return GetTopUsersByOverDueTime();
+            return this.GetTopUsersByOverDueTime();
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         /// <returns>Returns a list of users having top overdue time historical.</returns>
         public List<User> GetTopUsersByOverdueTimeHistorical()
         {
-            return GetTopUsersByOverDueTime(historical: true);
+            return this.GetTopUsersByOverDueTime(historical: true);
         }
 
         /// <summary>

@@ -23,11 +23,5 @@ namespace LibraryApplication.DAL.Repositories.BaseRepository
         /// <param name="item">The item.</param>
         /// <returns>Returns the udpated item.</returns>
         T Update(T item);
-
-        /// <summary>
-        /// Deletes the item with the specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        void Delete(int id);
     }
 }

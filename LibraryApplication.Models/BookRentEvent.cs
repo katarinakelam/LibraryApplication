@@ -20,5 +20,9 @@ namespace LibraryApplication.Models
         public DateTime DateToReturn { get; set; }
 
         public DateTime? DateOfReturn { get; set; } = null;
+
+        public virtual Book Book { get; set; }
+
+        public virtual User User { get; set; }
     }
 }
