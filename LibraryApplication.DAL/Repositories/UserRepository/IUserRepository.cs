@@ -13,9 +13,16 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
     /// <seealso cref="LibraryApplication.DAL.Repositories.BaseRepository.IQueryRepository{LibraryApplication.Models.User}" />
     public interface IUserRepository : ICommandRepository<User>, IQueryRepository<User>
     {
+        /// <summary>
+        /// Gets the top users by active overdue time.
+        /// </summary>
+        /// <returns>Returns a list of users having active top overdue time.</returns>
         List<User> GetTopUsersByActiveOverdueTime();
 
+        /// <summary>
+        /// Gets the top users by overdue time historical.
+        /// </summary>
+        /// <returns>Returns a list of users having top overdue time historical.</returns>
         List<User> GetTopUsersByOverdueTimeHistorical();
-
     }
 }

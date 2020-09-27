@@ -41,9 +41,33 @@ namespace LibraryApplication.DAL
                 .StartsAt(1)
                 .IncrementsBy(1);
 
+            modelBuilder.HasSequence<int>("User_seq", schema: "dbo")
+              .StartsAt(1)
+              .IncrementsBy(1);
+
+            modelBuilder.HasSequence<int>("Book_seq", schema: "dbo")
+              .StartsAt(1)
+              .IncrementsBy(1);
+
+            modelBuilder.HasSequence<int>("Genre_seq", schema: "dbo")
+              .StartsAt(1)
+              .IncrementsBy(1);
+
             modelBuilder.Entity<BookRentEvent>()
                 .Property(o => o.Id)
                 .HasDefaultValueSql("NEXT VALUE FOR dbo.BookEvent_seq");
+
+            modelBuilder.Entity<User>()
+                .Property(o => o.Id)
+                .HasDefaultValueSql("NEXT VALUE FOR dbo.User_seq");
+
+            modelBuilder.Entity<Book>()
+                .Property(o => o.Id)
+                .HasDefaultValueSql("NEXT VALUE FOR dbo.Book_seq");
+
+            modelBuilder.Entity<Genre>()
+                .Property(o => o.Id)
+                .HasDefaultValueSql("NEXT VALUE FOR dbo.Genre_seq");
 
             modelBuilder.Entity<User>().Property(p => p.UserContacts)
                 .HasConversion(
