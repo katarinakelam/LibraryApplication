@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryApplication.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200927232622_AddedVirtualEntities")]
-    partial class AddedVirtualEntities
+    [Migration("20200928132057_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,9 @@ namespace LibraryApplication.DAL.Migrations
 
                     b.Property<DateTime>("DateToReturn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("NumberOfCopiesRented")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

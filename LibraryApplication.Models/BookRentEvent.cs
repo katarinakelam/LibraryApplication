@@ -13,6 +13,8 @@ namespace LibraryApplication.Models
 
         public DateTime DateOfRenting { get; set; }
 
+        public int NumberOfCopiesRented { get; set; } = 1;
+
         public int UserId { get; set; }
 
         public int BookId { get; set; }

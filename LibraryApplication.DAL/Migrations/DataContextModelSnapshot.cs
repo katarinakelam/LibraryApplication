@@ -72,6 +72,9 @@ namespace LibraryApplication.DAL.Migrations
                     b.Property<DateTime>("DateToReturn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NumberOfCopiesRented")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 

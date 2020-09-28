@@ -56,6 +56,29 @@ namespace LibraryApplication.DAL.Repositories.BookRepository
         }
 
         /// <summary>
+        /// Checks the number of copies available.
+        /// </summary>
+        /// <param name="bookId">The book identifier.</param>
+        /// <returns>
+        /// Returns the number of copies available for book matching the identifier.
+        /// </returns>
+        public int CheckNumberOfCopiesAvailable(int bookId)
+        {
+            this.ValidateBooksPresenceInDatabase(bookId);
+
+            var numberOfCopies = this.context.Books.FirstOrDefault(b => b.Id == bookId).NumberOfCopies;
+
+            if (!this.context.BookRentEvents.Any() || !this.context.BookRentEvents.Any(br => br.BookId == bookId && !br.DateOfReturn.HasValue))
+                return numberOfCopies;
+
+            var numberOfCopiesAvailable = numberOfCopies
+                - this.context.BookRentEvents.Where(br => br.BookId == bookId && !br.DateOfReturn.HasValue)
+                .Select(br => br.NumberOfCopiesRented).Sum(); //Number of copies currently outside library (rented)
+
+            return numberOfCopiesAvailable;
+        }
+
+        /// <summary>
         /// Validates the books presence in database.
         /// </summary>
         /// <param name="id">The identifier.</param>
