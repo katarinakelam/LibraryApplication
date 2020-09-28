@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LibraryApplication.Controllers
+namespace LibraryApplication.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]

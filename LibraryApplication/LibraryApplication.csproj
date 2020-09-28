@@ -23,4 +23,9 @@
     <ProjectReference Include="..\LibraryApplication.Models\LibraryApplication.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapper\" />
+    <Folder Include="ViewModels\DTOs\" />
+  </ItemGroup>
+
 </Project>

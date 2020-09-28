@@ -1,8 +1,29 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<body>
+    <div class="text-center">
+        <div class="microblink-ui-component-wrapper">
+            <microblink-ui-web tabs autoscroll>
+                <span slot="labels.openLinkAtSmartphone" class="hide-until-component-is-loaded">
+                    Please open <b>exchange link</b> at the smartphone with <b>QR</b> reader.
+                </span>
+            </microblink-ui-web>
+        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <!-- Bootstrap modal for displaying results for the demo. -->
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -48,6 +48,8 @@ namespace LibraryApplication
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
+            app.UseCookiePolicy(options: new CookiePolicyOptions() { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None });
 
             app.UseEndpoints(endpoints =>
             {
