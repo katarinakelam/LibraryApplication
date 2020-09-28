@@ -1,8 +1,12 @@
 using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibraryApplication.DAL;
+using LibraryApplication.DAL.Repositories.BookRentEventRepository;
+using LibraryApplication.DAL.Repositories.BookRepository;
+using LibraryApplication.DAL.Repositories.UserRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +33,13 @@ namespace LibraryApplication
 
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LibraryContext")));
+
+            services.AddAutoMapper(typeof(Startup));
+
+            // configure DI for application services
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookRentEventRepository, BookRentEventRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +59,14 @@ namespace LibraryApplication
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors();
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
             app.UseCookiePolicy(options: new CookiePolicyOptions() { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None });
 
             app.UseEndpoints(endpoints =>

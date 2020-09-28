@@ -24,5 +24,23 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         /// </summary>
         /// <returns>Returns a list of users having top overdue time historical.</returns>
         List<User> GetTopUsersByOverdueTimeHistorical();
+
+        /// <summary>
+        /// Finds the user by name.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>
+        /// Returns a list of users matching the search string.
+        /// </returns>
+        List<User> FindUserByName(string searchString);
+
+        /// <summary>
+        /// Finds the user by date of birth.
+        /// </summary>
+        /// <param name="dateOfBirth">The date of birth.</param>
+        /// <returns>
+        /// Returns a list of users matching the date of birth.
+        /// </returns>
+        List<User> FindUserByDateOfBirth(DateTime dateOfBirth);
     }
 }

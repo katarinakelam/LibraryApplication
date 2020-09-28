@@ -119,6 +119,64 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         }
 
         /// <summary>
+        /// Finds the user by name.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>
+        /// Returns a list of users matching the search string.
+        /// </returns>
+        /// <exception cref="ArgumentException">searchString</exception>
+        /// <exception cref="NullReferenceException">There are no users in the database.</exception>
+        public List<User> FindUserByName(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                throw new ArgumentException(nameof(searchString));
+
+            if (!this.context.Users.Any())
+                throw new NullReferenceException("There are no users in the database.");
+
+            //Clear search string of unnecessary white spaces
+            searchString = string.Join(' ', searchString.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+
+            try
+            {
+                return this.context.Users.Where(u => string.Concat(u.FirstName, " ", u.LastName).ToLower().Contains(searchString.ToLower().Trim())).ToList();
+            }
+            catch (Exception ex)
+            {
+                return new List<User>();
+            }
+
+        }
+
+        /// <summary>
+        /// Finds the user by date of birth.
+        /// </summary>
+        /// <param name="dateOfBirth">The date of birth.</param>
+        /// <returns>
+        /// Returns a list of users matching the date of birth.
+        /// </returns>
+        /// <exception cref="ArgumentException">dateOfBirth</exception>
+        /// <exception cref="NullReferenceException">There are no users in the database.</exception>
+        public List<User> FindUserByDateOfBirth(DateTime dateOfBirth)
+        {
+            if (dateOfBirth == null || dateOfBirth == DateTime.MinValue)
+                throw new ArgumentException(nameof(dateOfBirth));
+
+            if (!this.context.Users.Any())
+                throw new NullReferenceException("There are no users in the database.");
+
+            try
+            {
+                return this.context.Users.Where(u => u.DateOfBirth.HasValue && u.DateOfBirth.Value == dateOfBirth).ToList();
+            }
+            catch (Exception ex)
+            {
+                return new List<User>();
+            }
+        }
+
+        /// <summary>
         /// Gets the top users by over due time.
         /// </summary>
         /// <param name="historical">if set to <c>true</c> [historical].</param>
