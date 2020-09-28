@@ -26,6 +26,16 @@ namespace LibraryApplication.Controllers.Api
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// </summary>
+        /// <param name="userRepository">The user repository.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <exception cref="ArgumentNullException">
+        /// userRepository
+        /// or
+        /// mapper
+        /// </exception>
         public UserController(IUserRepository userRepository,
             IMapper mapper)
         {

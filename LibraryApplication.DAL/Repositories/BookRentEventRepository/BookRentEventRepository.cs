@@ -51,7 +51,16 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
 
             this.ValidateBookRentEventsPresenceInDatabase(item.Id);
 
-            this.context.BookRentEvents.Update(item);
+            var bookRentEvent = this.context.BookRentEvents
+            .FirstOrDefault(br => br.BookId == item.BookId && br.UserId == item.UserId
+            && br.DateOfRenting == item.DateOfRenting);
+
+            bookRentEvent.NumberOfCopiesReturned = item.NumberOfCopiesReturned;
+
+            if (item.NumberOfCopiesReturned == item.NumberOfCopiesRented)
+                bookRentEvent.DateOfReturn = DateTime.Today;
+
+            this.context.Entry(bookRentEvent).State = EntityState.Modified;
             this.context.SaveChanges();
 
             return item;
@@ -70,7 +79,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
             return this.GetBookRentHistory(BookRentHistoryType.BookRentHistoryByBook, bookId);
         }
 
-             /// <summary>
+        /// <summary>
         /// Gets the book rent history by user.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
@@ -150,7 +159,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
 
             try
             {
-                return this.context.BookRentEvents
+                return this.context.BookRentEvents.Include(br => br.User).Include(br => br.Book)
                     .Where(b => bookRentHistoryType == BookRentHistoryType.BookRentHistoryByBook
                     ? b.BookId == id : b.UserId == id)
                     .OrderByDescending(br => br.DateOfRenting)

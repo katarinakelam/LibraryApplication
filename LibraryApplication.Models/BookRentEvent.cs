@@ -15,6 +15,8 @@ namespace LibraryApplication.Models
 
         public int NumberOfCopiesRented { get; set; } = 1;
 
+        public int NumberOfCopiesReturned { get; set; } = 1;
+
         public int UserId { get; set; }
 
         public int BookId { get; set; }
