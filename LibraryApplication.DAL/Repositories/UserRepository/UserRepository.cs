@@ -35,8 +35,16 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         {
             this.ValidateUser(item);
 
-            this.context.Users.Add(item);
-            this.context.SaveChanges();
+            //If such a user does not already exist in the database, create him. If yes, return an error message.
+            if (!this.context.Users.Any(u => u.FirstName == item.FirstName && u.LastName == item.LastName && u.DateOfBirth == item.DateOfBirth))
+            {
+                this.context.Users.Add(item);
+                this.context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Such user already exists in the database.");
+            }
         }
 
         /// <summary>
@@ -82,7 +90,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         {
             this.ValidateUsersPresenceInDatabase(id);
 
-            return this.context.Users.FirstOrDefault(user => user.Id == id);
+            return this.context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id);
         }
 
         /// <summary>
@@ -140,7 +148,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
 
             try
             {
-                return this.context.Users.Where(u => string.Concat(u.FirstName, " ", u.LastName).ToLower().Contains(searchString.ToLower().Trim())).ToList();
+                return this.context.Users.AsNoTracking().Where(u => (u.FirstName + " " + u.LastName).ToLower().IndexOf(searchString.ToLower().Trim()) > -1).ToList();
             }
             catch (Exception ex)
             {
@@ -256,7 +264,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
             if (!this.context.Users.Any())
                 throw new NullReferenceException("There are no users in the database.");
 
-            if (this.context.Users.FirstOrDefault(user => user.Id == id) == null)
+            if (this.context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id) == null)
                 throw new NullReferenceException("User not found in the database.");
         }
     }

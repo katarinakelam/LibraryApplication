@@ -179,6 +179,7 @@ namespace LibraryApplication.Controllers.Api
             if (string.IsNullOrEmpty(searchString) || string.IsNullOrWhiteSpace(searchString))
                 return BadRequest("Search string is invalid.");
 
+            searchString = searchString.Replace("\"", "");
             try
             {
                 var models = this.userRepository.FindUserByName(searchString);
