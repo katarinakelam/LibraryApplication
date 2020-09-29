@@ -19,5 +19,7 @@ namespace LibraryApplication.ViewModels.DTOs
         public DateTime? DateOfBirth { get; set; }
 
         public List<string> UserContacts { get; set; }
+
+        public bool IsValid { get; set; }
     }
 }
