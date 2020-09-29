@@ -24,7 +24,6 @@ namespace LibraryApplication.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<BookRentEvent> BookRentEvents { get; set; }
-        public DbSet<Genre> Genres { get; set; }
 
         /// <summary>
         /// </summary>
@@ -49,10 +48,6 @@ namespace LibraryApplication.DAL
               .StartsAt(1)
               .IncrementsBy(1);
 
-            modelBuilder.HasSequence<int>("Genre_seq", schema: "dbo")
-              .StartsAt(1)
-              .IncrementsBy(1);
-
             modelBuilder.Entity<BookRentEvent>()
                 .Property(o => o.Id)
                 .HasDefaultValueSql("NEXT VALUE FOR dbo.BookEvent_seq");
@@ -64,10 +59,6 @@ namespace LibraryApplication.DAL
             modelBuilder.Entity<Book>()
                 .Property(o => o.Id)
                 .HasDefaultValueSql("NEXT VALUE FOR dbo.Book_seq");
-
-            modelBuilder.Entity<Genre>()
-                .Property(o => o.Id)
-                .HasDefaultValueSql("NEXT VALUE FOR dbo.Genre_seq");
 
             modelBuilder.Entity<User>().Property(p => p.UserContacts)
                 .HasConversion(

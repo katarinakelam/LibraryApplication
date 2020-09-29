@@ -28,14 +28,6 @@ namespace LibraryApplication.DAL
                     return;   // DB has been seeded
                 }
 
-                if (!context.Genres.Any())
-                {
-                    context.Genres.AddRange(
-                         
-                        );
-                }
-
-               
                 context.SaveChanges();
             }
         }
