@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-
     Microblink.SDK.SetEndpoint('http://localhost:8081');
     Microblink.SDK.SetRecognizers('MRTD');
     Microblink.SDK.SetIsDataPersistingEnabled(false);
@@ -12,7 +11,7 @@
                 results = data.result.data instanceof Array ? data.result.data : [data.result.data];
             }
             else {
-                results = data.result.result;
+                results = data.result.data.result;
             }
 
             for (let i = 0; i < results.length; i++) {
@@ -23,7 +22,7 @@
             if (results.length < 1) {
                 $('.modal-body').html('<p>Scanning is finished, but we could not extract the data. Please check if you uploaded the right document type.</p>');
             } else {
-                $('.modal-body').html(colorJson(results));
+                $('.modal-body').html(results);
             }
             $('.modal-title').text("Scan success");
             //$('.modal').modal('show');
@@ -42,5 +41,12 @@
     }, 1000);
 
     $(".error-container").removeClass("show");
+
+    $("#manual-data-enter").hide();
+
+    $("#manual-enter-link").click(function (event) {
+        $(".microblink-ui-component-wrapper").hide();
+        $("#manual-data-enter").show();
+    });
 
 });

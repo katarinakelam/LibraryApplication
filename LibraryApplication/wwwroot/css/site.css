@@ -70,7 +70,7 @@ body {
 
 .microblink-ui-component-wrapper {
     max-width: 100vw;
-    height: 100vh;
+    height: 50vh;
     position: relative;
     margin: 0;
     box-sizing: border-box;
