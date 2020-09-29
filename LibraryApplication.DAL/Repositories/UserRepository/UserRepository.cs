@@ -118,15 +118,6 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         }
 
         /// <summary>
-        /// Gets the top users by overdue time historical.
-        /// </summary>
-        /// <returns>Returns a list of users having top overdue time historical.</returns>
-        public List<User> GetTopUsersByOverdueTimeHistorical()
-        {
-            return this.GetTopUsersByOverDueTime(historical: true);
-        }
-
-        /// <summary>
         /// Finds the user by name.
         /// </summary>
         /// <param name="searchString">The search string.</param>
@@ -190,7 +181,7 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         /// <param name="historical">if set to <c>true</c> [historical].</param>
         /// <returns>Returns a list of users having top overdue time.</returns>
         /// <exception cref="NullReferenceException">There are no users in the database.</exception>
-        private List<User> GetTopUsersByOverDueTime(bool historical = false)
+        private List<User> GetTopUsersByOverDueTime()
         {
             if (!this.context.Users.Any())
                 throw new NullReferenceException("There are no users in the database.");
@@ -200,9 +191,9 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
                 return new List<User>();
 
             var userIds = this.context.BookRentEvents
-                .Where(br => historical == true ? true : !br.DateOfReturn.HasValue) // If we're looking only at active users, they haven't returned their books yet.
+                .Where(br => !br.DateOfReturn.HasValue) // If we're looking only at active users, they haven't returned their books yet.
                 .GroupBy(br => br.UserId)
-                .Select(br => new { UserId = br.Key, TotalOverDueTime = br.Sum(b => b.DateOfReturn.Value.Subtract(b.DateOfRenting).TotalDays) })
+                .Select(br => new { UserId = br.Key, TotalOverDueTime = br.Sum(b => EF.Functions.DateDiffDay(b.DateOfReturn.Value, b.DateOfRenting)) })
                 .OrderByDescending(br => br.TotalOverDueTime)
                 .Select(br => br.UserId)
                 .ToList();

@@ -241,28 +241,6 @@ namespace LibraryApplication.Controllers.Api
         }
 
         /// <summary>
-        /// Gets the users by overdue time historic.
-        /// </summary>
-        /// <returns>
-        /// Returns a list of users having top historic overdue time.
-        /// </returns>
-        [HttpGet]
-        [Route("top-overdue-historic")]
-        public IActionResult GetUsersByOverdueTimeHistoric()
-        {
-            try
-            {
-                var models = this.userRepository.GetTopUsersByOverdueTimeHistorical();
-                var users = this.mapper.Map<List<UserViewModel>>(models);
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
-            }
-        }
-
-        /// <summary>
         /// Validates the user data request.
         /// </summary>
         /// <param name="user">The user.</param>

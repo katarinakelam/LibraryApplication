@@ -20,12 +20,6 @@ namespace LibraryApplication.DAL.Repositories.UserRepository
         List<User> GetTopUsersByActiveOverdueTime();
 
         /// <summary>
-        /// Gets the top users by overdue time historical.
-        /// </summary>
-        /// <returns>Returns a list of users having top overdue time historical.</returns>
-        List<User> GetTopUsersByOverdueTimeHistorical();
-
-        /// <summary>
         /// Finds the user by name.
         /// </summary>
         /// <param name="searchString">The search string.</param>
