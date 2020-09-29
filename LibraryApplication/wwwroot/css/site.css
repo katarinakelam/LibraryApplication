@@ -61,6 +61,40 @@ button.accept-policy {
     line-height: 60px; /* Vertically center the text there */
 }
 
+.form-group{
+    display: flex;
+}
+
+.block-contents {
+    padding-left: 2%;
+    width: 31%;
+}
+
+label {
+    width: 13%;
+    text-align: initial !important;
+}
+
+#manual-data-enter {
+    padding-top: 5%;
+}
+
+.user-contacts-input {
+    width: 44% !important;
+}
+
+#submit-button {
+    margin-top: 5%;
+    margin-right: 18%;
+}
+
+.entry:not(:first-of-type) {
+    margin-top: 10px;
+}
+
+.glyphicon {
+    font-size: 12px;
+}
 
 body {
     margin: 0;

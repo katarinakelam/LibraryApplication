@@ -49,4 +49,52 @@
         $("#manual-data-enter").show();
     });
 
+
+    $(document).on('click', '.btn-add', function (e) {
+        e.preventDefault();
+
+        var controlForm = $('.user-contacts-input form:first'),
+            currentEntry = $(this).parents('.entry:first'),
+            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('<svg width="2em" height="1.5em" viewBox="0 0 16 16" class="bi bi-dash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg>');
+    }).on('click', '.btn-remove', function (e) {
+        $(this).parents('.entry:first').remove();
+
+        e.preventDefault();
+        return false;
+    });
+
+    $("#submit-button").click(function () {
+        let date = new Date($('#dob').val());
+
+        let data = JSON.stringify({
+            'firstName': $("#firstName").val(),
+            'lastName': $("#lastName").val(),
+            'dateOfBirth': date,
+            'userContacts': $('input[name^=fields]').map(function (idx, elem) {
+                return $(elem).val();
+            }).toArray(),
+            'isValid' : true
+        });
+
+        $.ajax('/api/users', {
+            type: 'POST',  // http method
+            data: data,  // data to submit
+            contentType: 'application/json; charset=utf-8',
+            success: function (data, status, xhr) {
+                alert("User created!");
+                setTimeout(2000);
+                window.location.reload();
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                alert("Error!");
+            }
+        });
+    });
+
 });

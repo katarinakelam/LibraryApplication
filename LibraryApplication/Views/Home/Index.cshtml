@@ -3,20 +3,16 @@
 }
 <body>
     <div class="text-center">
-      
+
         <div class="container">
             <p>
                 Scan user's data to enter it to the database or <a href="#manual-data-enter" id="manual-enter-link">enter it manually</a>.
             </p>
         </div>
-        
+
         <div class="microblink-ui-component-wrapper">
             <microblink-ui-web tabs autoscroll>
             </microblink-ui-web>
-        </div>
-
-        <div id="manual-data-enter">
-            marko
         </div>
 
         <!-- Bootstrap modal for displaying results. -->
@@ -32,6 +28,47 @@
                     <div class="modal-body"></div>
                 </div>
             </div>
+        </div>
+
+        <div id="manual-data-enter">
+            <!--User bio data input-->
+            <form>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <div class="block-contents">
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label for="lastName">Last Name</label>
+                    <div class="block-contents">
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date Of Birth</label>
+                    <div class="block-contents">
+                        <input type="date" class="form-control" id="dob" placeholder="Enter date of birth">
+                    </div>
+                </div>
+            </form>
+            <!--User contacts form input-->
+            <div class="user-contacts-input">
+                <form role="form" autocomplete="off">
+                    <div class="entry input-group col-xs-3">
+                        <input class="form-control" name="fields" type="text" placeholder="Enter user contact" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <svg width="2em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
         </div>
     </div>
 </body>
