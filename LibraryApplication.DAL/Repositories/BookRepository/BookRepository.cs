@@ -37,7 +37,7 @@ namespace LibraryApplication.DAL.Repositories.BookRepository
         {
             this.ValidateBooksPresenceInDatabase(id);
 
-            return this.context.Books.FirstOrDefault(book => book.Id == id);
+            return this.context.Books.AsNoTracking().FirstOrDefault(book => book.Id == id);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace LibraryApplication.DAL.Repositories.BookRepository
         {
             this.ValidateBooksPresenceInDatabase(bookId);
 
-            var numberOfCopies = this.context.Books.FirstOrDefault(b => b.Id == bookId).NumberOfCopies;
+            var numberOfCopies = this.context.Books.AsNoTracking().FirstOrDefault(b => b.Id == bookId).NumberOfCopies;
 
             if (!this.context.BookRentEvents.Any() || !this.context.BookRentEvents.Any(br => br.BookId == bookId && !br.DateOfReturn.HasValue))
                 return numberOfCopies;
@@ -96,7 +96,7 @@ namespace LibraryApplication.DAL.Repositories.BookRepository
             if (!this.context.Books.Any())
                 throw new NullReferenceException("There are no books in the database.");
 
-            if (this.context.Books.FirstOrDefault(book => book.Id == id) == null)
+            if (this.context.Books.AsNoTracking().FirstOrDefault(book => book.Id == id) == null)
                 throw new NullReferenceException("Book not found in the database.");
         }
     }

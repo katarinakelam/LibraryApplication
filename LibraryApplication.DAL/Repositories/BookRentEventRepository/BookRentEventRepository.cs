@@ -36,6 +36,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
             this.ValidateBookRentEvent(item);
 
             this.context.BookRentEvents.Add(item);
+            this.context.SaveChanges();
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
             if (!this.context.BookRentEvents.Any())
                 throw new NullReferenceException("There are no book rent events in the database.");
 
-            if (this.context.BookRentEvents.FirstOrDefault(br => br.Id == id) == null)
+            if (this.context.BookRentEvents.AsNoTracking().FirstOrDefault(br => br.Id == id) == null)
                 throw new NullReferenceException("Book rent event not found in the database.");
         }
 
@@ -159,7 +160,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
 
             try
             {
-                return this.context.BookRentEvents.Include(br => br.User).Include(br => br.Book)
+                return this.context.BookRentEvents.AsNoTracking().Include(br => br.User).Include(br => br.Book)
                     .Where(b => bookRentHistoryType == BookRentHistoryType.BookRentHistoryByBook
                     ? b.BookId == id : b.UserId == id)
                     .OrderByDescending(br => br.DateOfRenting)

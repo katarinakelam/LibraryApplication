@@ -18,6 +18,7 @@ namespace LibraryApplication.Controllers.Api
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/book-rents")]
+    [ApiController]
     public class BookRentEventController : ControllerBase
     {
         private readonly IBookRentEventRepository bookRentEventRepository;
