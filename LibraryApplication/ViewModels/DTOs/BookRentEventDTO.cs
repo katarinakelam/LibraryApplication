@@ -17,5 +17,7 @@ namespace LibraryApplication.ViewModels.DTOs
         public int BookId { get; set; }
 
         public int? NumberOfCopiesReturned { get; set; }
+
+        public DateTime? DateOfRenting { get; set; }
     }
 }

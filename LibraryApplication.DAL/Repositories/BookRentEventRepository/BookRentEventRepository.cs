@@ -50,21 +50,19 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
         {
             this.ValidateBookRentEvent(item);
 
-            this.ValidateBookRentEventsPresenceInDatabase(item.Id);
-
             var bookRentEvent = this.context.BookRentEvents
             .FirstOrDefault(br => br.BookId == item.BookId && br.UserId == item.UserId
-            && br.DateOfRenting == item.DateOfRenting);
+            && br.DateOfRenting == item.DateOfRenting && br.DateOfReturn == null); //The book was returned if DateOfReturn is not null
 
-            bookRentEvent.NumberOfCopiesReturned = item.NumberOfCopiesReturned;
+            bookRentEvent.NumberOfCopiesReturned += item.NumberOfCopiesReturned;
 
-            if (item.NumberOfCopiesReturned == item.NumberOfCopiesRented)
+            if (item.NumberOfCopiesReturned == bookRentEvent.NumberOfCopiesRented)
                 bookRentEvent.DateOfReturn = DateTime.Today;
 
             this.context.Entry(bookRentEvent).State = EntityState.Modified;
             this.context.SaveChanges();
 
-            return item;
+            return bookRentEvent;
         }
 
         /// <summary>
