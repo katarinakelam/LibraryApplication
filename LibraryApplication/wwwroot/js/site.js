@@ -24,14 +24,12 @@
             } else {
                 {
                     checkDigits(results[0].result.rawMRZString);
-                    //$('.modal-body').html(results);
                     fillUpFormWithUserData(results[0].result);
                     $(".microblink-ui-component-wrapper").hide();
                     $("#manual-data-enter").show();
                 }
             }
             $('.modal-title').text("Scan success");
-            //$('.modal').modal('show');
         },
         onScanError: (error) => {
             $('.modal-title').text("Error occured");
@@ -47,14 +45,12 @@
     }, 1000);
 
     $(".error-container").removeClass("show");
-
     $("#manual-data-enter").hide();
 
     $("#manual-enter-link").click(function (event) {
         $(".microblink-ui-component-wrapper").hide();
         $("#manual-data-enter").show();
     });
-
 
     $(document).on('click', '.btn-add', function (e) {
         e.preventDefault();
@@ -93,8 +89,8 @@
         });
 
         $.ajax('/api/users', {
-            type: 'POST',  // http method
-            data: data,  // data to submit
+            type: 'POST',  
+            data: data,  
             contentType: 'application/json; charset=utf-8',
             success: function (data, status, xhr) {
                 alert("User created!");
