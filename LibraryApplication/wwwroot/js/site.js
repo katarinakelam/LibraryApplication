@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+
+    //Setup Microblink API
     Microblink.SDK.SetEndpoint('http://localhost:8081');
     Microblink.SDK.SetRecognizers('MRTD');
     Microblink.SDK.SetIsDataPersistingEnabled(false);
@@ -23,8 +25,13 @@
                 $('.modal-body').html('<p>Scanning is finished, but we could not extract the data. Please check if you uploaded the right document type.</p>');
             } else {
                 {
+                    //Check data validity. 
                     checkDigits(results[0].result.rawMRZString);
+
+                    //Fill up user form with scanned data.
                     fillUpFormWithUserData(results[0].result);
+
+                    //Show user form filled with data.
                     $(".microblink-ui-component-wrapper").hide();
                     $("#manual-data-enter").show();
                 }
@@ -47,11 +54,13 @@
     $(".error-container").removeClass("show");
     $("#manual-data-enter").hide();
 
+    //Hide Microblink component on manual input option chosen event
     $("#manual-enter-link").click(function (event) {
         $(".microblink-ui-component-wrapper").hide();
         $("#manual-data-enter").show();
     });
 
+    //Add new input field for user contacts on button click
     $(document).on('click', '.btn-add', function (e) {
         e.preventDefault();
 
@@ -71,6 +80,7 @@
         return false;
     });
 
+    //Send user data to server on submit button click
     $("#submit-button").click(function () {
         sendApiRequest();
     });
@@ -78,6 +88,7 @@
     function sendApiRequest() {
         let date = new Date($('#dob').val());
 
+        //Gather and serialize data.
         let data = JSON.stringify({
             'firstName': $("#firstName").val(),
             'lastName': $("#lastName").val(),
@@ -89,8 +100,8 @@
         });
 
         $.ajax('/api/users', {
-            type: 'POST',  
-            data: data,  
+            type: 'POST',
+            data: data,
             contentType: 'application/json; charset=utf-8',
             success: function (data, status, xhr) {
                 alert("User created!");
@@ -98,11 +109,12 @@
                 window.location.reload();
             },
             error: function (jqXhr, textStatus, errorMessage) {
-                alert("Error!");
+                alert("Error! " + errorMessage);
             }
         });
     }
 
+    //Fill up user form with data from OCR scanning
     function fillUpFormWithUserData(results) {
         $("#firstName").val(results.secondaryID);
         $("#lastName").val(results.primaryID);
@@ -117,6 +129,7 @@
         $('#dob').val(dateOfBirth.year + "-" + dateOfBirth.month + "-" + dateOfBirth.day);
     }
 
+    //Check date checksum digit validity
     function checkDigits(mrzString) {
         var dateAndCheckDigit = mrzString.split("\n")[1].slice(0, 7);
         var dateStr = dateAndCheckDigit.slice(0, 6);
@@ -126,7 +139,7 @@
         var multipliers = [7, 3, 1];
 
         for (var i = 0; i < dateStr.length; i++) {
-            checkSum += parseInt(dateStr.charAt(i)) * multipliers[i%3];
+            checkSum += parseInt(dateStr.charAt(i)) * multipliers[i % 3];
         }
 
         $("#isValid").val(checkSum % 10 == checkDigit);
