@@ -79,7 +79,8 @@ namespace LibraryApplication.Controllers.Api
             try
             {
                 var model = this.mapper.Map<BookRentEvent>(bookRentEventDto);
-                return Ok(this.bookRentEventRepository.Update(model));
+                var updatedModel = this.bookRentEventRepository.Update(model);
+                return Ok(this.mapper.Map<BookRentEventViewModel>(updatedModel));
             }
             catch (Exception ex)
             {

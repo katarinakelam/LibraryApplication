@@ -50,7 +50,7 @@ namespace LibraryApplication.DAL.Repositories.BookRentEventRepository
         {
             this.ValidateBookRentEvent(item);
 
-            var bookRentEvent = this.context.BookRentEvents
+            var bookRentEvent = this.context.BookRentEvents.Include(br => br.Book).Include(br => br.User)
             .FirstOrDefault(br => br.BookId == item.BookId && br.UserId == item.UserId
             && br.DateOfRenting == item.DateOfRenting && br.DateOfReturn == null); //The book was returned if DateOfReturn is not null
 
