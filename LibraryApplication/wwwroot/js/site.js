@@ -23,6 +23,7 @@
                 $('.modal-body').html('<p>Scanning is finished, but we could not extract the data. Please check if you uploaded the right document type.</p>');
             } else {
                 {
+                    checkDigits(results[0].result.rawMRZString);
                     //$('.modal-body').html(results);
                     fillUpFormWithUserData(results[0].result);
                     $(".microblink-ui-component-wrapper").hide();
@@ -88,7 +89,7 @@
             'userContacts': $('input[name^=fields]').map(function (idx, elem) {
                 return $(elem).val();
             }).toArray(),
-            'isValid': true
+            'isValid': $("#isValid").val()
         });
 
         $.ajax('/api/users', {
@@ -118,5 +119,20 @@
             dateOfBirth.day = "0" + dateOfBirth.day;
 
         $('#dob').val(dateOfBirth.year + "-" + dateOfBirth.month + "-" + dateOfBirth.day);
+    }
+
+    function checkDigits(mrzString) {
+        var dateAndCheckDigit = mrzString.split("\n")[1].slice(0, 7);
+        var dateStr = dateAndCheckDigit.slice(0, 6);
+        var checkDigit = parseInt(dateAndCheckDigit.slice(6, 7));
+
+        var checkSum = 0;
+        var multipliers = [7, 3, 1];
+
+        for (var i = 0; i < dateStr.length; i++) {
+            checkSum += parseInt(dateStr.charAt(i)) * multipliers[i%3];
+        }
+
+        $("#isValid").val(checkSum % 10 == checkDigit);
     }
 });
