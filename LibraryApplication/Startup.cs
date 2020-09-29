@@ -60,13 +60,6 @@ namespace LibraryApplication
 
             app.UseRouting();
 
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-
             app.UseCookiePolicy(options: new CookiePolicyOptions() { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None });
 
             app.UseEndpoints(endpoints =>
