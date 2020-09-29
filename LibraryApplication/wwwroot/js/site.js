@@ -22,7 +22,12 @@
             if (results.length < 1) {
                 $('.modal-body').html('<p>Scanning is finished, but we could not extract the data. Please check if you uploaded the right document type.</p>');
             } else {
-                $('.modal-body').html(results);
+                {
+                    //$('.modal-body').html(results);
+                    fillUpFormWithUserData(results[0].result);
+                    $(".microblink-ui-component-wrapper").hide();
+                    $("#manual-data-enter").show();
+                }
             }
             $('.modal-title').text("Scan success");
             //$('.modal').modal('show');
@@ -70,6 +75,10 @@
     });
 
     $("#submit-button").click(function () {
+        sendApiRequest();
+    });
+
+    function sendApiRequest() {
         let date = new Date($('#dob').val());
 
         let data = JSON.stringify({
@@ -79,7 +88,7 @@
             'userContacts': $('input[name^=fields]').map(function (idx, elem) {
                 return $(elem).val();
             }).toArray(),
-            'isValid' : true
+            'isValid': true
         });
 
         $.ajax('/api/users', {
@@ -95,6 +104,19 @@
                 alert("Error!");
             }
         });
-    });
+    }
 
+    function fillUpFormWithUserData(results) {
+        $("#firstName").val(results.secondaryID);
+        $("#lastName").val(results.primaryID);
+        var dateOfBirth = results.dateOfBirth;
+
+        if (dateOfBirth.month.toString().length == 1)
+            dateOfBirth.month = "0" + dateOfBirth.month;
+
+        if (dateOfBirth.day.toString().length == 1)
+            dateOfBirth.day = "0" + dateOfBirth.day;
+
+        $('#dob').val(dateOfBirth.year + "-" + dateOfBirth.month + "-" + dateOfBirth.day);
+    }
 });
